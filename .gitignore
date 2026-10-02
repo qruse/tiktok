@@ -5,3 +5,8 @@ node_modules/
 effect-house-lab/one-blink/native/tsconfig.json
 
 debug.log
+
+# 루프 실행 산출물
+effect-house-lab/loop/shots/
+effect-house-lab/loop/runs/
+effect-house-lab/loop/.lock

@@ -34,9 +34,15 @@
     {
       "id": "blink-and-it-moves-v1",
       "name": "깜빡하면 온다 (가칭)",
-      "status": "planning_pending_user_decision",
+      "status": "building",
+      "stage": "B1",
       "production_candidate": true,
+      "first_release": true,
       "plan": "PLANNING-2026-10-02.md",
+      "project_path": null,
+      "submitted_at": null,
+      "review_status": null,
+      "experiments": [],
       "published_at": null,
       "effect_url": null,
       "qualified_for_rewards": null,
@@ -47,5 +53,12 @@
       "cash_spent_krw": 0
     }
   ],
-  "account_created_user_reported": true
+  "account_created_user_reported": true,
+  "loop": {
+    "started_on": "2026-10-03",
+    "interval_hours": 3,
+    "auto_submit": true,
+    "max_new_effect_submissions_per_24h": 1,
+    "runbook": "loop/LOOP.md"
+  }
 }
