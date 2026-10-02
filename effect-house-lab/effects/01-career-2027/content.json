@@ -1,0 +1,20 @@
+{
+  "id": "career-2027-ko-v1",
+  "name": "내 2027년 직업은",
+  "title": "내 2027년 직업은?",
+  "subtitle": "화면을 탭하고 미래 뽑기",
+  "disclaimer": "재미로 보는 랜덤 결과",
+  "results": [
+    {"label":"AI 연구원", "caption":"회의는 AI에게 맡겼습니다", "color":"#D4F5ED", "symbol":"robot"},
+    {"label":"건물주", "caption":"출근 대신 옥상 산책", "color":"#FFF1B9", "symbol":"building"},
+    {"label":"프로게이머", "caption":"한 판 더가 업무입니다", "color":"#DED5FF", "symbol":"game"},
+    {"label":"행복한 백수", "caption":"오늘도 일정이 없습니다", "color":"#FFDCCA", "symbol":"sun"},
+    {"label":"우주비행사", "caption":"출장지가 지구 밖입니다", "color":"#CEE9FF", "symbol":"planet"},
+    {"label":"카페 사장", "caption":"내 커피가 제일 맛있음", "color":"#F1DFC8", "symbol":"cup"},
+    {"label":"스마트팜 사장", "caption":"상추도 자동으로 키웁니다", "color":"#DCF0BA", "symbol":"plant"},
+    {"label":"고양이 집사", "caption":"상사가 간식으로 월급 줌", "color":"#FFDCE9", "symbol":"cat"}
+  ],
+  "shooting_tip":"화면을 탭해 직업을 뽑아보세요. 재미로 보는 랜덤 결과입니다.",
+  "promo_caption":"2027년 출근지는 여기인가요? 내 결과는… #2027직업 #직업룰렛 #랜덤필터",
+  "status":"assets-only; not imported or published"
+}

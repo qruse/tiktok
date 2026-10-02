@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "started_on": "2026-09-06",
+  "timezone": "Asia/Seoul",
+  "program_admitted_at": null,
+  "account_region_confirmed": null,
+  "effects": [
+    {
+      "id": "career-2027-ko-v1",
+      "name": "내 2027년 직업은",
+      "status": "technical_test_only_do_not_publish",
+      "production_candidate": false,
+      "published_at": null,
+      "effect_url": null,
+      "qualified_for_rewards": null,
+      "observations": [],
+      "cash_spent_krw": 0,
+      "user_work_minutes": null
+    },
+    {
+      "id": "one-blink-ko-v1",
+      "name": "ONE BLINK — 기억한 별 찾기",
+      "status": "local_review_ready_native_startup_blocked",
+      "production_candidate": true,
+      "published_at": null,
+      "effect_url": null,
+      "qualified_for_rewards": null,
+      "native_engine_verified": false,
+      "phone_verified": false,
+      "user_final_approved": false,
+      "observations": [],
+      "cash_spent_krw": 0
+    }
+  ],
+  "account_created_user_reported": true
+}

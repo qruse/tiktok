@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>ONE BLINK · 기억한 별 찾기</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<main class="review">
+  <aside class="notes"><a class="wordmark" href="#">OB<span>✦</span></a><span class="eyebrow">EFFECT DESIGN / 01</span><h1>ONE<br>BLINK<span>✦</span></h1><p class="lead">방금 본 그 별.<br>다시 찾을 수 있을까?</p><div class="rule"><span>01</span><p>1.5초 동안 표정을 기억해요.</p></div><div class="rule"><span>02</span><p>똑같은 표정의 별을 찾아요.</p></div><div class="rule"><span>03</span><p>3라운드 · 찾는 시간 14초<br><small>틀리면 1초가 더해져요.</small></p></div><div class="review-tag">플레이 검토본 <span>V0.1</span></div><p class="fine">로컬에서 작동하는 게임 검토본입니다.<br>TikTok 효과의 실행·심사 검증은 별도로 필요합니다.</p></aside>
+  <section class="phone-shell" aria-label="게임 미리보기">
+    <div class="phone" id="phone">
+      <div class="camera-stage" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="portrait"><div class="head"></div><div class="shoulders"></div></div><div class="grain"></div></div>
+      <video id="camera" autoplay muted playsinline hidden></video>
+      <header class="hud"><span class="brand">ONE BLINK<span>✦</span></span><button class="sound" id="sound" aria-label="소리 켜기">♪ <span>OFF</span></button></header>
+      <div class="face-note" id="face-note">CAMERA AREA</div>
+      <section id="intro" class="screen intro">
+        <div class="tiny-label">LOOK. REMEMBER. FIND.</div><h2>잠깐 본 표정,<br><em>기억했어?</em></h2>
+        <div class="hero-star"><span class="spark s1">✦</span><img src="assets/star-4.svg" alt="왼쪽 눈을 감고 입이 동그란 별"><span class="spark s2">✦</span><span class="orbit-label">DON’T FORGET ME</span></div>
+        <div class="intro-meta"><span>3 ROUNDS</span><i></i><span>14 SECONDS</span></div>
+        <button class="cta" id="start">한 번 해볼까 <span>↗</span></button><p class="micro">표정을 기억하고, 같은 별을 탭하세요.</p>
+      </section>
+      <section id="play" class="screen play" hidden>
+        <div class="round-row"><div class="round-badge" id="round-badge">ROUND 01 / 03</div><div class="clock"><span id="clock">14.00</span><small>s</small></div></div>
+        <div class="time-track"><div id="time-fill"></div></div>
+        <h2 id="prompt">이 표정을 기억해!</h2><p class="phase-hint" id="phase-hint">곧 사라져요</p>
+        <div id="memory" class="memory"><div class="memory-ring"></div><img id="target" src="assets/star-0.svg" alt="기억할 별의 표정"><span id="memory-count">1.5</span></div>
+        <div id="board" class="board" hidden aria-label="별 선택"></div>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div class="round-dots" id="round-dots"><span></span><span></span><span></span></div>
+      </section>
+      <section id="result" class="screen result" hidden>
+        <div class="tiny-label" id="result-label">ALL STARS FOUND</div><h2 id="result-title">눈치 챘네!</h2><div class="result-art"><img id="result-star" src="assets/star-4.svg" alt="별 캐릭터"><span>✦</span><span>✧</span></div><div class="result-score" id="result-score">6.24<small>초</small></div><p class="result-detail" id="result-detail"></p><div class="splits" id="splits"></div><div class="share-line" id="share-line">친구는 몇 초 걸릴까?</div><button class="cta" id="retry">한 번 더 <span>↗</span></button>
+      </section>
+      <div id="confetti" class="confetti" aria-hidden="true"></div><footer class="phone-footer"><span>✦</span> 기억한 별 찾기 <span>✦</span></footer>
+    </div>
+  </section>
+  <aside class="review-controls"><span class="eyebrow">REVIEW CONTROLS</span><h3>직접 플레이</h3><p>별을 클릭하거나 탭하세요.<br>화면은 세로 촬영 구도입니다.</p><button id="camera-btn" class="secondary">카메라로 구도 보기</button><button id="reset" class="secondary">처음 화면으로</button><p class="fine" id="camera-status">카메라는 선택 사항입니다.<br>영상은 저장·전송하지 않습니다.</p><div class="divider"></div><span class="eyebrow">DESIGN NOTE</span><p>별의 <b>눈과 입</b>을 보세요.<br>색으로 정답을 알려주지 않아요.</p><p class="fine">현재 난이도는 설계 가설입니다.<br>실사용자 검증 후 조정할 수 있습니다.</p></aside>
+</main><script src="core.js"></script><script src="app.js"></script></body></html>
+

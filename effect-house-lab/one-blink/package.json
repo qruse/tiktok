@@ -1,0 +1,1 @@
+{"name":"one-blink-effect-review","version":"0.1.0","private":true,"scripts":{"test":"node --test core.test.cjs","preview":"node server.cjs","assets":"node build-assets.cjs"},"devDependencies":{"typescript":"^7.0.2"}}
