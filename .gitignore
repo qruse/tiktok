@@ -3,3 +3,5 @@ node_modules/
 
 # build-native.cjs가 PC별 Effect House SDK 경로로 생성
 effect-house-lab/one-blink/native/tsconfig.json
+
+debug.log
