@@ -35,6 +35,12 @@
   - 처음 누를 때 "No audio will be recorded" 확인 창이 뜬다. "Don't show again"을 체크해 두었다.
   - 저장 창 기본 위치 `C:\Users\Public\EHTest\Desktop`이 없어서 오류가 났다. 폴더를 만들어 두었다.
   - 녹화 파일은 버튼을 누르고 약 3.7초 뒤부터 담긴다. 그래서 2.5초짜리 시작 화면(DON'T BLINK)이 빠진다. 데모 영상용으로는 다른 방법이 필요하다.
+- **소리 녹음(2026-10-03 대화 세션에서 해결):** `record-run.ps1 -Audio`
+  - ffmpeg dshow에는 오디오 장치가 없었다. Python `soundcard`는 이 PC에서 0xC0000005로 꺼졌다. `PyAudioWPatch`(WASAPI 루프백)는 된다. 기본 출력은 "스피커(High Definition Audio Device)"다.
+  - 루프백은 아무 소리도 안 날 때 프레임을 주지 않아 시간이 밀린다. 그래서 `rec-loopback.py`가 같은 스피커에 무음을 계속 재생한다.
+  - 앱 녹화본은 실제 시간보다 약 1% 느리게 기록된다(오디오 = 1.01 × 영상 + 9.5초, idle 3 기준). `mux-audio.py`가 화면 밝기 변화와 소리 시작을 맞춰 자동으로 보정한다. 첫 시험에서 15개 이벤트가 모두 맞았고 평균 오차는 0.06초였다.
+  - 미리보기 아래 스피커 아이콘(1203,593)이 음소거면 녹음이 무음이 된다.
+- Effect House가 가끔 "Help us improve Effect House" 설문 창을 미리보기 위에 띄운다. "Not now"(1048,590)로 닫는다. 녹화 전에 캡처해서 확인한다.
 - 미리보기 패널(작은 화면)에서는 필름 스트립 양옆에 흰 얼룩이 보이지만, MCP 스크린샷과 녹화 파일에는 없다. 패널 표시 문제로 보이며 휴대폰에서는 확인 전이다.
 - 프레임 추출: imageio_ffmpeg에 든 ffmpeg(`%LOCALAPPDATA%\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\imageio_ffmpeg\binaries\*.exe`)를 쓴다.
 

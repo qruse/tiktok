@@ -1,0 +1,79 @@
+<title>Effect 확인함</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Noto+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: one phone-width column of review cards, newest on top. Each card = sound video + GIF side by side (stacked on phones), then scores and notes.
+   Single dark look on purpose: the effects are previewed on a dark camera UI. */
+:root {
+  --bg: #121316;
+  --panel: #1b1c21;
+  --fg: #e9e7e3;
+  --muted: #9a98a3;
+  --accent: #c8323c;
+  --ok: #4e9f6b;
+  --line: #2c2d34;
+  --display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.6; }
+main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; display: grid; gap: 28px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--display); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--display); font-weight: 700; font-size: 34px; line-height: 1.1; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 14px; margin: 0; }
+article { background: var(--panel); border-radius: 14px; padding: 18px; display: grid; gap: 14px; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.head h2 { font-family: var(--display); font-size: 24px; margin: 0; font-weight: 700; letter-spacing: .01em; }
+.tag { font-size: 12px; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--line); color: var(--muted); }
+.tag.state { border-color: var(--accent); color: var(--fg); }
+.media { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
+figure video, figure img { width: 100%; max-width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); background: #000; display: block; }
+figcaption { font-size: 12px; color: var(--muted); }
+.score { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
+.chip b { color: var(--accent); font-weight: 600; }
+.chip.five b { color: var(--ok); }
+ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">TikTok Effect 루프</span>
+    <h1>Effect 확인함</h1>
+    <p class="sub">루프가 만든 디자인을 소리 있는 영상과 GIF로 올린다. 위가 최신이다. 영상은 눌러서 소리와 함께 본다.</p>
+  </header>
+
+  <!-- NEW ENTRIES GO HERE (newest first). Copy one <article> block. -->
+
+  <article id="blink-v1">
+    <div class="head">
+      <h2>Blink and It Moves v1</h2>
+      <span class="tag state">제출됨 · 심사 중</span>
+      <span class="tag">2026-10-03 16:01 제출</span>
+    </div>
+    <div class="media">
+      <figure>
+        <video src="media/blink-v1-full.mp4" controls playsinline preload="metadata"></video>
+        <figcaption>한 판 전체, 소리 있음(35.9초). 배경음, 쿵, 심장 소리, 덮침음이 들어 있다.</figcaption>
+      </figure>
+      <figure>
+        <img src="media/blink-v1.gif" alt="여성 뒤로 회색 형체가 다가오고, 덮친 뒤 LASTED 31.6s와 4컷 결과 화면이 나오는 GIF">
+        <figcaption>제출한 데모 15초 GIF(소리 없음).</figcaption>
+      </figure>
+    </div>
+    <div class="score">
+      <span class="chip">첫 화면 <b>4</b></span>
+      <span class="chip">아트 <b>4</b></span>
+      <span class="chip">덮침 <b>4</b></span>
+      <span class="chip">결과 <b>4</b></span>
+      <span class="chip">마감 <b>4</b></span>
+    </div>
+    <ul>
+      <li>규칙: 깜빡이면(화면이 잠깐 어두워지면) 뒤의 형체가 한 걸음 다가온다. 7걸음째에 덮친다.</li>
+      <li>덮치는 순간은 1초가 안 된다. 영상 30초 근처에서 일어난다.</li>
+      <li>Effect House 내장 테스트 영상(Idle Person 3)으로 녹화했다. 실제 사람 반응은 휴대폰 실기로 확인해야 한다.</li>
+      <li>새 통과 기준(5점 2개 이상)에는 못 미친다. v1.1에서 덮치는 장면과 결과 화면을 5점까지 올린다.</li>
+    </ul>
+  </article>
+</main>
