@@ -63,7 +63,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   // reaction shots are taken once the camera is uncovered, so the face shows with the figure right behind it
   private readonly reactTimes = [0.05, 0.22, 0.4];
   private readonly popAt = 0.55;
-  private readonly reactRect = new APJS.Rect(0.33, 0.3, 0.6, 0.6);
+  private readonly reactRect = new APJS.Rect(0.36, 0.25, 0.62, 0.62);
   private resultT = 0;
   private popped = false;
   private f3Tr: APJS.ScreenTransform | undefined;
@@ -162,9 +162,10 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     this.figTr.anchoredPosition = new APJS.Vector2f(x, headY - 0.42 * h);
   }
 
-  // on the result screen it stands right behind the player, head below the headline
+  // on the result screen it stands right behind the player, head below the headline,
+  // far enough out that long hair does not cover its face in the CAUGHT photo
   private placeResultFigure(): void {
-    this.setFigure(1280 * 0.72, 215, 190);
+    this.setFigure(1280 * 0.72, 270, 190);
     if (this.figImg) this.figImg.color = new APJS.Color(1, 1, 1, 1);
     if (this.poses.length > 0 && this.figImg) {
       const k = this.poses.length - 1;
