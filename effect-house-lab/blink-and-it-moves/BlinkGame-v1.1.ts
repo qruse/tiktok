@@ -29,6 +29,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   @serializeProperty frames: APJS.SceneObject[] = [];
   @serializeProperty frameLabels: APJS.SceneObject[] = [];
   @serializeProperty timeText: APJS.SceneObject;
+  @serializeProperty rankText: APJS.SceneObject;
   @serializeProperty retryButton: APJS.SceneObject;
   @serializeProperty droneSfx: APJS.SceneObject;
   @serializeProperty thumpSfx: APJS.SceneObject;
@@ -48,6 +49,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private frameTexts: APJS.Text[] = [];
   private shotTimes: number[] = [];
   private time!: APJS.Text;
+  private rank: APJS.Text | undefined;
+  private blinks = 0;
   private retryImg!: APJS.Image;
   private drone: APJS.AudioComponent[] = [];
   private thump: APJS.AudioComponent[] = [];
@@ -56,8 +59,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private heartT = -1;
   private scareShot = 0;
   private bestReact = -1;
-  private readonly reactTimes = [0.5, 0.68, 0.86];
-  private readonly scareDark = 0.08;
+  private readonly reactTimes = [0.48, 0.62, 0.76];
+  private readonly scareDark = 0.06;
   private shownBeat = -1;
 
   private state = 'intro';
@@ -93,6 +96,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     this.cam = this.segCamera.getComponent('Camera') as APJS.Camera;
     this.frameImgs = this.frames.map(o => o.getComponent('Image') as APJS.Image);
     this.time = this.timeText.getComponent('Text') as APJS.Text;
+    this.rank = this.rankText ? (this.rankText.getComponent('Text') as APJS.Text) : undefined;
     this.frameTexts = this.frameLabels.map(o => o.getComponent('Text') as APJS.Text);
     this.retryImg = this.retryButton.getComponent('Image') as APJS.Image;
     if (!this.figTr || !this.scareTr || !this.cam || !this.time || !this.retryImg || this.frameImgs.some(x => !x)) return false;
@@ -112,7 +116,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private reset(): void {
     this.state = 'intro'; this.t = 0; this.playTime = 0; this.step = 0; this.sinceStep = 0;
     this.wasClosed = false; this.blackT = 0; this.captureT = -1; this.shots = []; this.reaction = []; this.shotTimes = [];
-    this.lastClose = -10; this.heartT = -1;
+    this.lastClose = -10; this.heartT = -1; this.blinks = 0;
     this.drone.forEach(a => { a.volume = 30; a.play(); });
     this.figure.setEnabledInHierarchy(true);
     this.introText.setEnabledInHierarchy(true);
@@ -174,6 +178,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
 
   private doStep(reason: string): void {
     this.step++; this.sinceStep = 0;
+    if (reason === 'blink') this.blinks++;
     console.log('[game] step ' + this.step + ' (' + reason + ') at ' + this.playTime.toFixed(2) + 's');
     if (this.step >= this.steps) { this.startScare(); return; }
     this.placeFigure();
@@ -212,7 +217,17 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     if (this.reaction.length > 0) this.frameImgs[3].texture = this.reaction[0];
     if (this.frameTexts[3]) this.frameTexts[3].text = 'CAUGHT';
     this.time.text = 'LASTED ' + this.playTime.toFixed(1) + 's';
-    console.log('[game] result time=' + this.playTime.toFixed(2) + ' shots=' + n + ' reaction=' + this.reaction.length);
+    // a title worth posting: the fewer blinks it took to catch you, the worse the title
+    if (this.rank) this.rank.text = this.rankTitle();
+    console.log('[game] result time=' + this.playTime.toFixed(2) + ' blinks=' + this.blinks + ' shots=' + n + ' reaction=' + this.reaction.length);
+  }
+
+  private rankTitle(): string {
+    const share = this.blinks / Math.max(1, this.steps);
+    if (this.blinks === 0) return 'UNBLINKING';
+    if (share <= 0.3) return 'STEEL EYES';
+    if (share <= 0.6) return 'SHAKY';
+    return 'EASY PREY';
   }
 
   onUpdate(dt: number): void {
@@ -275,8 +290,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
         if (score > this.bestReact) { const tex = this.capture(); if (tex) { this.reaction = [tex]; this.bestReact = score; } }
         console.log('[game] reaction shot ' + this.scareShot + ' score=' + score.toFixed(3));
       }
-      // the camera stays covered for scareDark + strike + 0.5 s (0.9 s with two lunge frames, under the 1 s limit)
-      if (r >= strike + 0.5) this.showResult();
+      // the camera stays covered for scareDark + strike + 0.42 s (0.8 s with two lunge frames, ~0.9 s measured; under the 1 s limit)
+      if (r >= strike + 0.42) this.showResult();
       return;
     }
     if (this.state !== 'play') return;
