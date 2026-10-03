@@ -21,6 +21,23 @@
 - 사용 설명서: `C:\Users\Public\EHTest\App\Resources\ask-ai\workspace\AGENTS.md`, `EDIT_DSL_REFERENCE.md`, `skills\`
 - SDK 타입: `C:\Users\Public\EHTest\App\Resources\BuiltinResource\UserAPI\APJS.d.ts` (읽기만, App 폴더 수정 금지)
 
+### MCP 사용 요령 (2026-10-03 회차 3)
+- `set_preview_video`의 인자 이름은 `video_name`이다(예: `{"video_name":"preview_face_idle||3"}`). "replaced by reload" 오류가 떠도 영상은 바뀐다(`get_current_preview_video`로 확인).
+- 내장 얼굴 영상 idle 1·2·3 모두 로컬에 있다(idle 3은 `AppData\Roaming\EffectHouse\Shared\...`에 받아져 있음). idle 2만 깜빡인다(4초 간격).
+- `transport_preview_property`는 success를 돌려줘도 BlinkGame 값이 바뀌지 않았다. 임시로 값을 바꿀 때는 `edit_by_dsl` `set_component`(guid r20)로 바꾸고 끝나면 되돌린다.
+- `get_script_logs`는 출력이 길다. `| Out-String | ConvertFrom-Json | Select-Object -Last N`으로 필요한 줄만 본다.
+- 덮침처럼 짧은 장면은 `steps=1, idleStep=2`로 임시 저장하고 idle 1 영상에서 reset 후 약 4초 뒤부터 연속 screenshot을 찍으면 잡힌다.
+- **`trending_effects`를 쓰지 않는다.** 썸네일 없는 선택 창을 GUI에 띄우고, 누가 Select/Cancel을 누를 때까지 응답하지 않는다. 닫지 않고 두면 창이 쌓이고 미리보기 녹화가 막힌다. 고른 1개의 표지 URL(cover_url)만 돌려준다. 상위 효과 표지가 꼭 필요하면 백그라운드로 호출하고 8초 뒤 Select(1239,650)를 누른다.
+
+### 미리보기 녹화 (2026-10-03 회차 3)
+- MCP `record_preview_video_mp4`는 "VESDK savingRecording did not produce ..."로 계속 실패했다(창을 다 닫고, Desktop 폴더를 만든 뒤에도 실패).
+- 우회로: `loop/tools/record-run.ps1 -Video "preview_face_idle||2" -Out C:\Users\Public\EHTest\Projects\_src\x.mp4`. 미리보기 패널 녹화 버튼(1284,594, 창 최대화 기준)을 눌러 녹화하고 저장 창에 경로를 붙여넣는다. 720x1280 30fps, 약 50MB/33초, **소리 없음**.
+  - 처음 누를 때 "No audio will be recorded" 확인 창이 뜬다. "Don't show again"을 체크해 두었다.
+  - 저장 창 기본 위치 `C:\Users\Public\EHTest\Desktop`이 없어서 오류가 났다. 폴더를 만들어 두었다.
+  - 녹화 파일은 버튼을 누르고 약 3.7초 뒤부터 담긴다. 그래서 2.5초짜리 시작 화면(DON'T BLINK)이 빠진다. 데모 영상용으로는 다른 방법이 필요하다.
+- 미리보기 패널(작은 화면)에서는 필름 스트립 양옆에 흰 얼룩이 보이지만, MCP 스크린샷과 녹화 파일에는 없다. 패널 표시 문제로 보이며 휴대폰에서는 확인 전이다.
+- 프레임 추출: imageio_ffmpeg에 든 ffmpeg(`%LOCALAPPDATA%\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\imageio_ffmpeg\binaries\*.exe`)를 쓴다.
+
 ## 창 다루기
 - 창이 두 모니터에 걸쳐 있으면 오른쪽 모니터(원점 0,0, 1920x1080)로 옮겨 최대화해서 쓴다. `scr.ps1 -Action max -Text "Effect House"` (단, 팝업이 떠 있으면 팝업이 최대화되니 팝업을 먼저 닫는다).
 - 프로젝트를 처음 열면 안내 팝업 2개(Customize Workspace Layout, Keyboard shortcuts)와 Windows 방화벽 허용 창이 뜬다. 방화벽 창은 "취소"를 눌렀다(시스템 보안 설정은 사용자 몫).

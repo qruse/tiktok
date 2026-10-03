@@ -52,7 +52,9 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private heartT = -1;
   private scareShot = 0;
   private bestReact = -1;
-  private readonly reactTimes = [0.3, 0.55, 0.8];
+  private readonly reactTimes = [0.42, 0.67, 0.92];
+  private readonly scareDark = 0.12;
+  private revealed = false;
 
   private state = 'intro';
   private t = 0;
@@ -119,7 +121,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private placeFigure(): void {
     // the first step is the biggest jump so the rule reads at once; later steps are even
     const f = this.step <= 0 ? 0 : Math.min(1, 0.3 + 0.7 * (this.step - 1) / Math.max(1, this.steps - 2));
-    const h = 1280 * (0.15 + 0.7 * f);
+    // big enough on the first screen that the player notices someone is standing there
+    const h = 1280 * (0.22 + 0.63 * f);
     // keep the figure's head peeking over the player's right shoulder as it grows
     const headY = 250 + 110 * f;
     this.figTr.sizeDelta = new APJS.Vector2f(h * 9 / 16, h);
@@ -159,14 +162,13 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   }
 
   private startScare(): void {
-    this.state = 'scare'; this.t = 0; this.captureT = -1; this.scareShot = 0; this.bestReact = -1;
+    this.state = 'scare'; this.t = 0; this.captureT = -1; this.scareShot = 0; this.bestReact = -1; this.revealed = false;
     this.figure.setEnabledInHierarchy(false);
-    this.blackout.setEnabledInHierarchy(false);
-    this.scareFigure.setEnabledInHierarchy(true);
-    this.scareTr.scale = new APJS.Vector2f(0.3, 0.3);
+    // the last "blink": a dark beat, then it is already in your face (revealed in onUpdate)
+    this.blackout.setEnabledInHierarchy(true);
+    this.scareFigure.setEnabledInHierarchy(false);
     this.heartT = -1;
     this.drone.forEach(a => a.stop());
-    this.sting.forEach(a => a.play());
   }
 
   private showResult(): void {
@@ -184,13 +186,15 @@ export class BlinkGame extends APJS.BasicScriptComponent {
       }
     }
     if (this.reaction.length > 0) this.frameImgs[3].texture = this.reaction[0];
-    if (this.frameTexts[3]) this.frameTexts[3].text = this.playTime.toFixed(1) + 's';
-    this.time.text = this.playTime.toFixed(1) + 's';
+    if (this.frameTexts[3]) this.frameTexts[3].text = 'CAUGHT';
+    this.time.text = 'LASTED ' + this.playTime.toFixed(1) + 's';
     console.log('[game] result time=' + this.playTime.toFixed(2) + ' shots=' + n + ' reaction=' + this.reaction.length);
   }
 
   onUpdate(dt: number): void {
     if (!this.ready && !this.init()) return;
+    // a load hitch (scene reload, record start) must not eat the intro or count as play time
+    dt = Math.min(dt, 0.1);
     this.t += dt;
     if (this.blackT > 0) { this.blackT -= dt; if (this.blackT <= 0) this.blackout.setEnabledInHierarchy(false); }
     if (this.heartT >= 0) { this.heartT -= dt; if (this.heartT < 0) this.heart.forEach(a => a.play()); }
@@ -207,13 +211,22 @@ export class BlinkGame extends APJS.BasicScriptComponent {
       return;
     }
     if (this.state === 'scare') {
-      const k = Math.min(1, this.t / 0.6), e = 1 - (1 - k) * (1 - k);
-      const s = 0.3 + 1.1 * e;
+      const r = this.t - this.scareDark;
+      if (r < 0) return;
+      if (!this.revealed) {
+        this.revealed = true;
+        this.blackout.setEnabledInHierarchy(false);
+        this.scareFigure.setEnabledInHierarchy(true);
+        this.sting.forEach(a => a.play());
+      }
+      // already close when the dark beat ends, then a short punch-in and a slow creep until the cut
+      const k = Math.min(1, r / 0.1), e = 1 - (1 - k) * (1 - k) * (1 - k);
+      const s = 1.5 + 0.4 * e + 0.15 * Math.min(1, Math.max(0, r - 0.1) / 0.78);
       this.scareTr.scale = new APJS.Vector2f(s, s);
       // white pop on impact, then a short decaying shake
-      if (this.flash) this.flash.setEnabledInHierarchy(this.t < 0.07);
-      const amp = 26 * Math.max(0, 1 - this.t / 0.7);
-      this.scareTr.anchoredPosition = new APJS.Vector2f(this.scareHome.x + amp * Math.sin(this.t * 90), this.scareHome.y + amp * Math.cos(this.t * 77));
+      if (this.flash) this.flash.setEnabledInHierarchy(r < 0.06);
+      const amp = 34 * Math.max(0, 1 - r / 0.5);
+      this.scareTr.anchoredPosition = new APJS.Vector2f(this.scareHome.x + amp * Math.sin(r * 90), this.scareHome.y + amp * Math.cos(r * 77));
       // keep the most surprised/fearful of three reaction shots
       if (this.scareShot < this.reactTimes.length && this.t >= this.reactTimes[this.scareShot]) {
         this.scareShot++;
@@ -223,7 +236,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
         if (score > this.bestReact) { const tex = this.capture(); if (tex) { this.reaction = [tex]; this.bestReact = score; } }
         console.log('[game] reaction shot ' + this.scareShot + ' score=' + score.toFixed(3));
       }
-      if (this.t >= 0.9) this.showResult();
+      // the face stays covered for 0.88 s (under the 1 s limit)
+      if (r >= 0.88) this.showResult();
       return;
     }
     if (this.state !== 'play') return;

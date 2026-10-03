@@ -35,11 +35,15 @@
       "id": "blink-and-it-moves-v1",
       "name": "깜빡하면 온다 (가칭)",
       "status": "building",
-      "stage": "B1",
+      "stage": "B6",
+      "stage_updated_at": "2026-10-03T15:05:00+09:00",
+      "gate_scores": [
+        {"at": "2026-10-03T14:50:00+09:00", "first_screen": 3, "art": 4, "scare_impact": 3, "result_share": 3, "finish": 3, "passed": false, "note": "LOOP-LOG 회차 3 참고. 채점 후 덮침(암전 컷)·결과 문구·첫 화면 형체 크기를 고쳤고 재채점은 다음 회차"}
+      ],
       "production_candidate": true,
       "first_release": true,
       "plan": "PLANNING-2026-10-02.md",
-      "project_path": null,
+      "project_path": "C:\\Users\\Public\\EHTest\\Projects\\blink-and-it-moves-v1\\effect.ehproj",
       "submitted_at": null,
       "review_status": null,
       "experiments": [],
