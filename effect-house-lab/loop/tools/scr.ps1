@@ -4,6 +4,7 @@
 #   dclick: 더블클릭
 #   keys  : SendKeys 문자열 전송 (예: "^s" = Ctrl+S)
 #   idle  : 마지막 키보드/마우스 입력 후 경과 초
+#   max   : -Text 로 준 프로세스 창을 현재 모니터에서 최대화
 #   focus : -Text 로 준 프로세스 이름의 주 창을 앞으로
 param([string]$Action = 'shot', [int]$X = 0, [int]$Y = 0, [string]$Text = '', [string]$Out = '', [int]$L = 0, [int]$T = 0, [int]$W = 0, [int]$H = 0)
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
@@ -15,6 +16,7 @@ public class U {
   [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
   [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);
+  [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr h);
   [StructLayout(LayoutKind.Sequential)] public struct LII { public uint cbSize; public uint dwTime; }
   [DllImport("user32.dll")] public static extern bool GetLastInputInfo(ref LII p);
 }
@@ -38,9 +40,14 @@ switch ($Action) {
   'dclick' { Click $X $Y; Start-Sleep -Milliseconds 80; Click $X $Y; "dclicked $X,$Y" }
   'keys'   { [System.Windows.Forms.SendKeys]::SendWait($Text); "sent $Text" }
   'idle'   { $i = New-Object U+LII; $i.cbSize = 8; [U]::GetLastInputInfo([ref]$i) | Out-Null; [int](([Environment]::TickCount - $i.dwTime) / 1000) }
+  'max'    {
+    $p = Get-Process -Name $Text -ErrorAction SilentlyContinue | Where-Object MainWindowHandle -ne 0 | Select-Object -First 1
+    if (-not $p) { "no window: $Text"; exit 1 }
+    [U]::ShowWindow($p.MainWindowHandle, 3) | Out-Null; [U]::SetForegroundWindow($p.MainWindowHandle) | Out-Null; "maximized $Text"
+  }
   'focus'  {
     $p = Get-Process -Name $Text -ErrorAction SilentlyContinue | Where-Object MainWindowHandle -ne 0 | Select-Object -First 1
     if (-not $p) { "no window: $Text"; exit 1 }
-    [U]::ShowWindow($p.MainWindowHandle, 9) | Out-Null; [U]::SetForegroundWindow($p.MainWindowHandle) | Out-Null; "focused $Text"
+    if ([U]::IsIconic($p.MainWindowHandle)) { [U]::ShowWindow($p.MainWindowHandle, 9) | Out-Null }; [U]::SetForegroundWindow($p.MainWindowHandle) | Out-Null; "focused $Text"
   }
 }
