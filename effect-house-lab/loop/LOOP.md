@@ -49,6 +49,7 @@
 ### 3-1. 사전 점검 (5분)
 1. `git pull`을 한다.
 2. 이 문서, `WORKING.md`, `LOOP-LOG.md`의 마지막 3회차, `LEARNINGS.md`, `UI-NOTES.md`를 읽는다.
+   - 예외: `WORKING.md`가 기록을 보지 않는 재채점을 지시하면 `WORKING.md`를 먼저 읽는다. `LOOP-LOG.md`의 채점 줄과 `tracker.json`의 `gate_scores`는 재채점을 마친 뒤에 읽는다. 회차 6이 먼저 읽고 채점해서 블라인드가 깨졌다.
 3. `scr.ps1 -Action idle`로 사람이 PC를 쓰는지 확인한다.
    - 300초 미만이면 사람이 쓰는 중이다. **GUI를 건드리지 않는다.** GUI 없이 할 수 있는 일(분석, 에셋·스크립트 준비, 문서)만 하고 기록한다.
 4. Effect House 프로세스를 확인한다.
