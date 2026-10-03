@@ -67,6 +67,12 @@
 - 홈 창 위쪽 탭 **Projects → Manage Effects**: 효과 이름, Status(승인되면 `Active`), Last modified가 나온다. 줄 끝 아이콘은 공유, 업데이트(추정), 끄기, 삭제다. **삭제·끄기 아이콘은 누르지 않는다.**
 - **Analytics** 탭: 위쪽 Overview(Views, Tries, Posts, Likes, Shares, 계정 합계)와 Audience(Country/Gender, Creators/Viewers)가 있다. 아래 Manage effects 표에 효과별 Views, Posts, Tries, Likes, Shares가 있다. 표가 옆으로 길어서 가로 스크롤바 오른쪽 화살표를 눌러야 Likes·Shares가 보인다. "Data updates every 24 hours" 안내가 있다.
 - 프로젝트 창에서 왼쪽 위 집 아이콘(20,50)을 누르면 프로젝트가 닫히지 않고 홈 창으로 바뀐다. 홈 창은 오른쪽 모니터 가운데에 작게(약 1300x820) 뜬다.
+  - 홈 창이 앞에 있으면 MCP가 "No active project"를 돌려준다.
+  - 프로젝트로 돌아가려면 Projects 탭에서 Recent Projects(650,256)를 누르고, 프로젝트 행(첫 줄 726,352)을 더블클릭한다. 프로젝트 창이 다시 최대화되어 열린다(회차 5 확인).
+  - 홈 창 좌표(창이 360,120에 있을 때): Analytics 탭 (1068,186), Projects 탭 (955,186), Manage Effects (802,256)
+- **Create icon**(1590,50) 창에는 저장된 Icon 1과 Icon 2 칸이 있다. Icon 2 칸을 누르면 그 칸이 실시간 재생된다. Cancel(1231,824)로 닫으면 `Icon/` 파일은 바뀌지 않는다(회차 5 확인).
+- **Test performance**(1460,50)는 마지막 결과를 먼저 보여 준다. 새로 재려면 "Test again"(894,711)을 누르고 약 60초 기다린다. 닫기는 Done(1024,711).
+- 설정값 확인: MCP `inspect` 도구에 `{"guid":"r20"}`를 준다(`edit_by_dsl`이 아니다).
 
 ## 함정
 - 한글 사용자 경로에서 실행하면 바로 꺼진다. 반드시 위 cmd로 실행한다.
