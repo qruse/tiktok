@@ -96,6 +96,7 @@ B6: 첫 출시 게이트 (B5 완료, 회차 3). 게이트 1차 채점 미통과(
 - Segmentation Effects / 2D Camera s1(카메라 컴포넌트 c2) / Portrait Segmentation s2 / Background s3(Image c5), Figure s7(ScreenTransform c12, Image c13), Portrait s4
 - 2D Foreground / 2D Camera s6 / BlinkManager s8(BlinkGame 컴포넌트, set_component guid는 r20으로 통했다), IntroText s13, ScareFigure s14, Blackout s15, ResultPanel s16 [StripBack s17, Frame0~3 s18~s21, TimeText s22, RetryButton s23 > RetryLabel s24]
 - 텍스처: 카메라 r4, 임시 형체 r8, 흰색 r17, 알약 버튼 r18 (원본 `C:\Users\Public\EHTest\Projects\_src\`, 사본 `effect-house-lab/blink-and-it-moves/assets/`)
+- (v1.1d, 회차 7) ResultPanel에 CaughtCard s38(Image, 텍스처 r43 `CaughtCard.png`)을 Frame2와 Frame3 사이에 추가. 출처: 직접 그림(PIL, `art-v1.1d/make_card.py`). ReactCreature s36은 숨김. 반응 사진은 `captureCameraOutput(cam, Rect(0.33, 0.3, 0.6, 0.6), 0.6)` — Rect 원점은 왼쪽 아래다.
 - 스크립트: `Assets/Scripts/BlinkGame.ts`(본 게임). `BlinkProbe.ts`(r13)는 검증용으로 남아 있고 어디에도 붙어 있지 않다. 제출 전 delete_script로 지운다.
 
 ## 막힌 것

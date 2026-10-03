@@ -82,5 +82,8 @@
 - MCP `open_project`는 이미 열린 인스턴스에서 프로젝트를 바꿔 연다. 새 인스턴스를 띄울 필요가 없다.
 - 생성하고 안 쓰는 텍스처는 `edit_by_dsl`의 `delete_resource`(`{"guid":"r39"}`)로 지운다. 파일만 지우면 프로젝트에 빈 항목이 남는다(회차 6 확인).
 - 홈 창에서 프로젝트 행을 더블클릭한 직후 5초 캡처에는 창이 안 보일 수 있다. `focus` 후 다시 캡처하면 최대화된 프로젝트 창이 있다(회차 6).
+- `CaptureFrameHelper.captureCameraOutput`의 Rect는 **원점이 왼쪽 아래**다. 위쪽(얼굴)을 자르려면 y를 크게 준다(회차 7: y 0.05로 줬더니 가슴이 찍힘, 0.3으로 고침).
+- eh-mcp.ps1 `-ArgsJson`에 공백이 든 JSON을 주면 중첩 powershell 호출에서 따옴표가 깨진다. JSON을 임시 파일에 쓰고 `-ArgsFile`로 준다. `edit_by_dsl`은 `intention`이 필수다(회차 7).
+- `get_script_logs`의 컴파일 오류는 편집 도중 저장된 중간 상태일 수 있다. 마지막 COMPILE 줄이 success인지 본다(회차 7).
 - `generate_image` 결과 텍스처는 최대 512px로 압축된다(Size512). 화면에 0.1초만 나오는 컷에는 문제없었다.
 - 프로젝트 `Assets`의 PNG를 같은 이름으로 덮어쓰면 Effect House가 자동으로 다시 읽는다(회차 4, 눈빛 추가 때 확인).
