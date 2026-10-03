@@ -34,18 +34,30 @@
     {
       "id": "blink-and-it-moves-v1",
       "name": "깜빡하면 온다 (가칭)",
-      "status": "building",
-      "stage": "B6",
-      "stage_updated_at": "2026-10-03T15:05:00+09:00",
+      "submitted_name": "Blink and It Moves",
+      "status": "submitted",
+      "stage": "B7",
+      "stage_updated_at": "2026-10-03T16:01:00+09:00",
       "gate_scores": [
-        {"at": "2026-10-03T14:50:00+09:00", "first_screen": 3, "art": 4, "scare_impact": 3, "result_share": 3, "finish": 3, "passed": false, "note": "LOOP-LOG 회차 3 참고. 채점 후 덮침(암전 컷)·결과 문구·첫 화면 형체 크기를 고쳤고 재채점은 다음 회차"}
+        {"at": "2026-10-03T14:50:00+09:00", "first_screen": 3, "art": 4, "scare_impact": 3, "result_share": 3, "finish": 3, "passed": false, "note": "LOOP-LOG 회차 3 참고. 채점 후 덮침(암전 컷)·결과 문구·첫 화면 형체 크기를 고쳤고 재채점은 다음 회차"},
+        {"at": "2026-10-03T15:50:00+09:00", "first_screen": 4, "art": 4, "scare_impact": 4, "result_share": 4, "finish": 4, "passed": true, "note": "대화 세션 재채점. 마감 4점은 단서 있음: 소리는 파형 분석만, 휴대폰 실기 미확인. 근거는 LOOP-LOG 대화 세션 15:40~16:01"}
       ],
+      "submission": {
+        "icon": "템플릿 Person 1(긴 갈색 머리 여성) + 형체가 어깨 뒤로 다가온 순간에 멈춤. 1개",
+        "hint": null,
+        "default_sound": null,
+        "challenge": "Game Effect Challenge - Halloween Warmup Sub Challenge (사용자 동의 2026-10-03)",
+        "trend": "Halloween",
+        "demo_video": "blink-and-it-moves/submit-v1/demo15-idle3.mp4 (14.8초, 소리 없음)",
+        "tuning": {"steps": 7, "minGap": 0.4, "idleStep": 4.5, "closeRatio": 0.6},
+        "performance": {"fps": 16.54, "fps_min": 13.5, "memory_mb": 61.91, "size_mb": 1.8}
+      },
       "production_candidate": true,
       "first_release": true,
       "plan": "PLANNING-2026-10-02.md",
       "project_path": "C:\\Users\\Public\\EHTest\\Projects\\blink-and-it-moves-v1\\effect.ehproj",
-      "submitted_at": null,
-      "review_status": null,
+      "submitted_at": "2026-10-03T16:01:00+09:00",
+      "review_status": "in_review",
       "experiments": [],
       "published_at": null,
       "effect_url": null,

@@ -38,6 +38,20 @@
 - 미리보기 패널(작은 화면)에서는 필름 스트립 양옆에 흰 얼룩이 보이지만, MCP 스크린샷과 녹화 파일에는 없다. 패널 표시 문제로 보이며 휴대폰에서는 확인 전이다.
 - 프레임 추출: imageio_ffmpeg에 든 ffmpeg(`%LOCALAPPDATA%\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\imageio_ffmpeg\binaries\*.exe`)를 쓴다.
 
+## 제출 (2026-10-03 첫 제출 때 확인, 창 최대화 기준 좌표)
+- 오른쪽 위 **Submit**(1828,50)을 누르면 Publish Effect 창이 열린다.
+  - 필수: What do you want to submit(새 효과 / 기존 효과 업데이트), Effect name(25자 이내, 중복 불가), Effect icon(1~2개)
+  - 선택: Hint, Default sound, Challenge, Trend, Demo video
+- **Demo video는 15초 이하, 32MB 이하, MOV/MP4다.** 녹화본을 ffmpeg로 잘라 쓴다.
+- **아이콘은 직접 그린 그림을 그대로 올릴 수 없다.**
+  - "Create Icon" 창은 템플릿 인물 사진(또는 업로드한 인물 사진)에 효과를 입혀서 아이콘을 만든다.
+  - 그 창의 슬라이더는 시간 이동이 아니라 확대 조절이다.
+  - 원하는 순간을 담으려면 재생(⟳ 1262,617) 후 일시정지(1213,617)로 멈춘다.
+  - 형체가 다가온 장면을 담으려고 `idleStep`을 0.7로 잠깐 줄였다. 약 5.6초 뒤에 멈추면 형체가 어깨 뒤로 다가온 장면이 잡혔다. **제출 전에 반드시 원래 값으로 되돌린다.**
+  - 아이콘 2개 모드에서 "Create another"를 누르면 아이콘 1이 계속 재생되다가 결과 화면으로 바뀌어 버렸다. 아이콘 1개를 만들고 Submit → "Submit effect with 1 icon?" → Submit 순서로 하는 게 안전하다.
+- 챌린지를 고르면 약관 동의 체크박스(권리 확인, 이메일 공유)가 나온다. 사용자 동의를 받고 체크한다(2026-10-03 동의 받음).
+- 제출하면 "Your effect has been submitted! … usually takes 24 hours" 창이 뜨고, 그 아래 "Manage effects" 링크가 있다.
+
 ## 창 다루기
 - 창이 두 모니터에 걸쳐 있으면 오른쪽 모니터(원점 0,0, 1920x1080)로 옮겨 최대화해서 쓴다. `scr.ps1 -Action max -Text "Effect House"` (단, 팝업이 떠 있으면 팝업이 최대화되니 팝업을 먼저 닫는다).
 - 프로젝트를 처음 열면 안내 팝업 2개(Customize Workspace Layout, Keyboard shortcuts)와 Windows 방화벽 허용 창이 뜬다. 방화벽 창은 "취소"를 눌렀다(시스템 보안 설정은 사용자 몫).

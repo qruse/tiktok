@@ -55,6 +55,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private readonly reactTimes = [0.42, 0.67, 0.92];
   private readonly scareDark = 0.12;
   private revealed = false;
+  private struck = false;
 
   private state = 'intro';
   private t = 0;
@@ -121,14 +122,31 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private placeFigure(): void {
     // the first step is the biggest jump so the rule reads at once; later steps are even
     const f = this.step <= 0 ? 0 : Math.min(1, 0.3 + 0.7 * (this.step - 1) / Math.max(1, this.steps - 2));
-    // big enough on the first screen that the player notices someone is standing there
-    const h = 1280 * (0.22 + 0.63 * f);
+    // big enough on the first screen that the player notices someone is standing there,
+    // with the legs low enough to disappear behind the player's shoulder (standing behind, not floating)
+    const h = 1280 * (0.42 + 0.43 * f);
     // keep the figure's head peeking over the player's right shoulder as it grows
-    const headY = 250 + 110 * f;
-    this.figTr.sizeDelta = new APJS.Vector2f(h * 9 / 16, h);
-    this.figTr.anchoredPosition = new APJS.Vector2f(200 + 15 * f, headY - 0.42 * h);
+    const headY = 230 + 130 * f;
+    this.setFigure(h, 200 + 15 * f, headY);
+    // far back it sits in the dim room; it gains light as it closes in
+    if (this.figImg) { const c = 0.62 + 0.38 * f; this.figImg.color = new APJS.Color(c, c, c * 1.04, 1); }
     if (this.poses.length > 0 && this.figImg) {
       const k = Math.min(this.poses.length - 1, Math.floor(f * this.poses.length));
+      if (this.poses[k]) this.figImg.texture = this.poses[k];
+    }
+  }
+
+  private setFigure(h: number, x: number, headY: number): void {
+    this.figTr.sizeDelta = new APJS.Vector2f(h * 9 / 16, h);
+    this.figTr.anchoredPosition = new APJS.Vector2f(x, headY - 0.42 * h);
+  }
+
+  // on the result screen it stands right behind the player, head below the headline
+  private placeResultFigure(): void {
+    this.setFigure(1280 * 0.72, 215, 190);
+    if (this.figImg) this.figImg.color = new APJS.Color(1, 1, 1, 1);
+    if (this.poses.length > 0 && this.figImg) {
+      const k = this.poses.length - 1;
       if (this.poses[k]) this.figImg.texture = this.poses[k];
     }
   }
@@ -162,7 +180,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   }
 
   private startScare(): void {
-    this.state = 'scare'; this.t = 0; this.captureT = -1; this.scareShot = 0; this.bestReact = -1; this.revealed = false;
+    this.state = 'scare'; this.t = 0; this.captureT = -1; this.scareShot = 0; this.bestReact = -1; this.revealed = false; this.struck = false;
     this.figure.setEnabledInHierarchy(false);
     // the last "blink": a dark beat, then it is already in your face (revealed in onUpdate)
     this.blackout.setEnabledInHierarchy(true);
@@ -176,6 +194,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     this.scareFigure.setEnabledInHierarchy(false);
     if (this.flash) this.flash.setEnabledInHierarchy(false);
     this.figure.setEnabledInHierarchy(true);
+    this.placeResultFigure();
     this.resultPanel.setEnabledInHierarchy(true);
     const n = this.shots.length;
     for (let i = 0; i < 3; i++) {
@@ -217,15 +236,25 @@ export class BlinkGame extends APJS.BasicScriptComponent {
         this.revealed = true;
         this.blackout.setEnabledInHierarchy(false);
         this.scareFigure.setEnabledInHierarchy(true);
-        this.sting.forEach(a => a.play());
+        this.thump.forEach(a => a.play());
       }
-      // already close when the dark beat ends, then a short punch-in and a slow creep until the cut
-      const k = Math.min(1, r / 0.1), e = 1 - (1 - k) * (1 - k) * (1 - k);
-      const s = 1.5 + 0.4 * e + 0.15 * Math.min(1, Math.max(0, r - 0.1) / 0.78);
+      if (!this.struck && r >= 0.17) { this.struck = true; this.sting.forEach(a => a.play()); }
+      // two beats, true to the rule (it only moves in the dark): it is there, the light flickers out,
+      // and when it comes back it is already on top of you
+      const beat2 = 0.17;
+      const dark = r >= 0.09 && r < beat2;
+      this.blackout.setEnabledInHierarchy(dark);
+      this.scareFigure.setEnabledInHierarchy(!dark);
+      let s: number;
+      if (r < beat2) s = 1.15 + 0.1 * Math.min(1, r / 0.09);
+      else {
+        const q = r - beat2, k = Math.min(1, q / 0.08), e = 1 - (1 - k) * (1 - k) * (1 - k);
+        s = 1.6 + 0.45 * e + 0.12 * Math.min(1, Math.max(0, q - 0.08) / 0.6);
+      }
       this.scareTr.scale = new APJS.Vector2f(s, s);
-      // white pop on impact, then a short decaying shake
-      if (this.flash) this.flash.setEnabledInHierarchy(r < 0.06);
-      const amp = 34 * Math.max(0, 1 - r / 0.5);
+      // white pop on the second impact, then a short decaying shake
+      if (this.flash) this.flash.setEnabledInHierarchy(r >= beat2 && r < beat2 + 0.06);
+      const amp = r < beat2 ? 6 : 40 * Math.max(0, 1 - (r - beat2) / 0.5);
       this.scareTr.anchoredPosition = new APJS.Vector2f(this.scareHome.x + amp * Math.sin(r * 90), this.scareHome.y + amp * Math.cos(r * 77));
       // keep the most surprised/fearful of three reaction shots
       if (this.scareShot < this.reactTimes.length && this.t >= this.reactTimes[this.scareShot]) {
