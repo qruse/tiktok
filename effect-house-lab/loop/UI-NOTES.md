@@ -68,6 +68,8 @@
 - **Analytics** 탭: 위쪽 Overview(Views, Tries, Posts, Likes, Shares, 계정 합계)와 Audience(Country/Gender, Creators/Viewers)가 있다. 아래 Manage effects 표에 효과별 Views, Posts, Tries, Likes, Shares가 있다. 표가 옆으로 길어서 가로 스크롤바 오른쪽 화살표를 눌러야 Likes·Shares가 보인다. "Data updates every 24 hours" 안내가 있다.
 - 프로젝트 창에서 왼쪽 위 집 아이콘(20,50)을 누르면 프로젝트가 닫히지 않고 홈 창으로 바뀐다. 홈 창은 오른쪽 모니터 가운데에 작게(약 1300x820) 뜬다.
   - 홈 창이 앞에 있으면 MCP가 "No active project"를 돌려준다.
+  - 저장하지 않은 변경이 있으면 집 아이콘을 누를 때 "Save this project?" 창이 뜬다. Save는 (1118,580), Cancel은 (804,580)이다(회차 8). 관측 전에 MCP save_project로 저장해 두면 이 창이 안 뜬다.
+  - 결과 화면 빠른 시험: r20 steps 1, idleStep 2로 임시 저장 → interact_by_dsl `reset_preview`, `wait 7500`, `screenshot`이면 사진 카드까지 뜬 화면이 찍힌다. 끝나면 되돌린다(회차 8).
   - 프로젝트로 돌아가려면 Projects 탭에서 Recent Projects(650,256)를 누르고, 프로젝트 행(첫 줄 726,352)을 더블클릭한다. 프로젝트 창이 다시 최대화되어 열린다(회차 5 확인).
   - 홈 창 좌표(창이 360,120에 있을 때): Analytics 탭 (1068,186), Projects 탭 (955,186), Manage Effects (802,256)
 - **Create icon**(1590,50) 창에는 저장된 Icon 1과 Icon 2 칸이 있다. Icon 2 칸을 누르면 그 칸이 실시간 재생된다. Cancel(1231,824)로 닫으면 `Icon/` 파일은 바뀌지 않는다(회차 5 확인).

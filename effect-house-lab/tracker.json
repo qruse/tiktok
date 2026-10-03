@@ -137,6 +137,26 @@
           "passed": null,
           "provisional": true,
           "note": "회차 7, 결과 화면 개선: 결과 직후 얼굴+어깨 뒤 형체 반응 사진(0.05/0.22/0.4초 중 놀람·두려움 최고)을 찍고 0.55초에 필름 끝 칸에서 1.45배·-6도 인화 사진 카드(CAUGHT)로 튀어나오게 함 + 쿵 소리. 결과 5는 같은 회차 점수라 다음 회차 블라인드 확인 필요. 근거 후보 shots/gate6-result-compare.jpg(왼쪽 3 상위 효과, 4번째 v1.1c 결과, 5·6번째 v1.1d 결과). 약점: 긴 머리면 사진 속 형체가 반쯤 가려짐"
+        },
+        {
+          "at": "2026-10-04T08:18:00+09:00",
+          "version": "v1.1d",
+          "result_share": 4,
+          "passed": false,
+          "provisional": false,
+          "note": "회차 8, 결과 화면만 블라인드 재채점(LOOP-LOG·gate_scores를 읽기 전에 채점). 사진 카드 속 형체가 긴 머리에 가려지거나(idle 1) 카드 오른쪽 끝에서 잘리거나(idle 2) 거의 안 보임(idle 3). '내 뒤에 뭔가 있는 얼굴'이 세 판 중 한 판만 또렷. 근거 shots/gate6-result-compare.jpg, t7-ends.jpg"
+        },
+        {
+          "at": "2026-10-04T08:40:00+09:00",
+          "version": "v1.1e",
+          "first_screen": 4,
+          "art": 4,
+          "scare_impact": 5,
+          "result_share": 5,
+          "finish": 4,
+          "passed": null,
+          "provisional": true,
+          "note": "회차 8, 결과 화면 형체 x 215→270(머리가 얼굴 옆 귀 높이), 반응 사진 크롭 (0.33,0.3,0.6,0.6)→(0.36,0.25,0.62,0.62). 세 판 모두 카드 안에 내 얼굴과 형체 얼굴이 함께 다 보임. 결과 5는 같은 회차 점수라 다음 회차 블라인드 확인 필요. 근거 후보 shots/gate7-result-compare.jpg(왼쪽 3 상위 효과, 오른쪽 3 v1.1e 결과), t8-ends.jpg"
         }
       ],
       "submission": {
@@ -175,11 +195,12 @@
           "형체 눈구멍 속 빛나는 눈동자",
           "달려드는 두 컷 색을 회색 형체에 맞춤(회차 5)",
           "달려드는 두 컷 가슴 갈비뼈를 어둡게 가림(회차 6)",
-          "결과 화면: 반응 사진을 결과 직후(얼굴 + 어깨 뒤 형체)로 옮기고, CAUGHT 사진이 인화 사진 카드로 튀어나옴 + 쿵 소리, AGAIN 버튼 x -105(회차 7)"
+          "결과 화면: 반응 사진을 결과 직후(얼굴 + 어깨 뒤 형체)로 옮기고, CAUGHT 사진이 인화 사진 카드로 튀어나옴 + 쿵 소리, AGAIN 버튼 x -105(회차 7)",
+          "결과 화면: 형체를 얼굴 옆(x 270)으로, 반응 사진 크롭을 오른쪽·아래로 옮겨 카드 속 형체 얼굴이 머리카락에 가려지지 않게 함(회차 8)"
         ],
         "demo_candidates": [
-          "blink-and-it-moves/submit-v1.1/demo15-A.mp4 (회차 7 재작성, v11l-idle3 소리 판 마지막 15초, 사진 카드로 끝남, 선택)",
-          "blink-and-it-moves/submit-v1.1/demo15-B.mp4 (회차 7 재작성, v11l-idle1 마지막 15초, 달려드는 컷이 어두운 머리와 겹쳐 덜 보임)"
+          "blink-and-it-moves/submit-v1.1/demo15-A.mp4 (회차 8 재작성, v11m-idle3 소리 판 마지막 15초, 사진 카드로 끝남, 선택)",
+          "blink-and-it-moves/submit-v1.1/demo15-B.mp4 (회차 8 재작성, v11m-idle1 마지막 15초, 형체가 어두운 머리와 겹쳐 덜 보임)"
         ],
         "icon_choice": "기존 Icon/femaleIcon.png 유지. 2안(같은 템플릿, v1.1 눈빛, 15초 멈춤)은 형체가 작고 멀어 약함(shots/t5-icon-AB.jpg)",
         "performance": {
@@ -187,7 +208,7 @@
           "fps_min": 13.5,
           "memory_mb": 64.34,
           "size_mb": 2,
-          "at": "2026-10-04T05:31:00+09:00"
+          "at": "2026-10-04T08:28:00+09:00"
         },
         "submitted_at": null
       },
@@ -254,6 +275,20 @@
           },
           "video_notes": "사용 영상 없음(Posts 0). Audience는 'Not enough data to show this report'",
           "source": "EH 홈 > Analytics Overview(계정 합계, 효과 1개뿐), Projects > Manage Effects Status(Last modified 10/3/26 04:01 PM). 캡처 shots/t7-analytics.png, t7-manage.png"
+        },
+        {
+          "at": "2026-10-04T08:19:00+09:00",
+          "review_status": "approved",
+          "metrics": {
+            "Status": "Active",
+            "Views": 0,
+            "Tries": 0,
+            "Posts": 0,
+            "Likes": 0,
+            "Shares": 0
+          },
+          "video_notes": "사용 영상 없음(Posts 0). Audience는 'Not enough data to show this report'",
+          "source": "EH 홈 > Analytics Overview(계정 합계, 효과 1개뿐), Projects > Manage Effects Status(Last modified 10/3/26 04:01 PM). 캡처 shots/t8-analytics.png, t8-manage.png"
         }
       ],
       "cash_spent_krw": 0
