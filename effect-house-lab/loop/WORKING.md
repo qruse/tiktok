@@ -1,7 +1,31 @@
 # 진행 중 작업
 
-## 상태 (2026-10-03 16:01)
-- **깜빡하면 온다 = "Blink and It Moves" 제출 완료, 심사 중.** EH 안내상 심사는 보통 24시간이 걸린다. 주말이라 더 걸릴 수 있다.
+## 상태 (2026-10-03 20:50, 회차 4)
+- **v1 승인·공개 중(Active).** 16:01 제출, 20:22에 Manage Effects에서 Active 확인. 수치는 모두 0(Views/Posts/Tries/Likes/Shares).
+- **v1.1 게이트 보강판 제작 완료, 게이트 재채점 대기.** 회차 4가 잠정 채점을 했지만 5점이 같은 회차 점수라 다음 회차가 다시 채점해서 확정해야 한다(점수는 일부러 여기 적지 않는다).
+
+## ★ 다음 회차 첫 행동 (v1.1 제출까지)
+1. **기록을 보지 않고 재채점한다.** LOOP-LOG 회차 4와 tracker의 v1.1 점수를 먼저 읽지 말고, `loop/shots/gate3-compare.jpg`(상위 3 + v1.1 시작·덮침 중간·덮침·결과)와 `gate3-idle{1,2,3}.jpg`, `t4-scare-v11h.jpg`만 보고 5항목을 매긴다. 그다음 회차 4 점수와 비교한다.
+   - 주의: `gate3-idle1/2.jpg`는 손 뻗는 컷 위치를 고치기 전 판이다(잘린 아래 끝이 보임). 고친 판은 `t4-scare-v11h.jpg`와 `_src/v11h-idle3*.mp4`다. 재채점 전에 idle 1 또는 2를 한 번 다시 녹화해서 고친 판으로 3종을 맞추면 더 좋다.
+2. **통과하면(모두 4 이상 + 5점 2개 이상)** v1.1을 "기존 효과 업데이트"로 제출한다(Submit → What do you want to submit에서 기존 효과 업데이트 → Blink and It Moves).
+   - 데모: `blink-and-it-moves/submit-v1.1/demo15-A.mp4`(소리 있음, 칭호 결과로 끝남)를 잠정 선택. B안은 덮치는 순간에 끊긴다.
+   - 아이콘: 기존 아이콘을 유지해도 되지만, 출시 게이트는 2안 비교를 요구한다. 형체 눈빛이 보이는 순간으로 1안을 더 만들어 비교한다(UI-NOTES "제출" 절차, idleStep 임시 변경은 반드시 되돌린다).
+   - 제출 전에 `steps 7, minGap 0.4, idleStep 4.5, closeRatio 0.6`인지 inspect r20으로 확인한다.
+   - 제출하면 tracker `update_in_progress.submitted_at`을 채우고 experiments에 게이트 보강을 기록하고, 즉시 알린다.
+3. **떨어지면** 가장 올리기 쉬운 항목부터 고친다. 후보: 첫 화면(형체를 더 크게/눈빛 펄스), 결과(칭호에 색·아이콘, 4번째 컷 크기).
+
+## v1.1에서 바꾼 것 (회차 4)
+- 프로젝트: `C:\Users\Public\EHTest\Projects\blink-and-it-moves-v1.1\effect.ehproj` (v1 폴더 복사본). 스크립트 백업 `../blink-and-it-moves/BlinkGame-v1.1.ts`
+- **덮침:** BlinkGame에 `lungePoses`(r37 LungeMidA2 전신 달려듦, r38 LungeMidB2 손 뻗음, 둘 다 generate_image 생성 원본). 0.06초 암전 → A2(0.11초, 오른쪽 어깨 쪽에서) → 0.05초 암전 → B2(아래로 내려 잘린 끝 화면 밖) → 번쩍 + 기존 클로즈업 0.42초. 녹화 기준 카메라 덮는 시간 0.83초.
+  - 첫 생성본(LungeMidA/B)은 해골·이빨 좀비 얼굴이라 기존 형체와 달라서 지웠다. 비판 기록: "다른 캐릭터처럼 보임" → 매끈한 얼굴로 재생성.
+- **결과:** RankText(s37) 추가. 깜빡임 0 → UNBLINKING, 비율 ≤0.3 → STEEL EYES, ≤0.6 → SHAKY, 그 외 EASY PREY. TimeText(s22)는 y400, 44pt, 연회색 "LASTED 31.6s".
+- **첫 화면:** FigureFarA·FigureNearB 눈구멍 속에 작은 빛나는 눈동자(직접 합성). 원본은 `../blink-and-it-moves/art-v1.1-preglow/`.
+- 녹화(모두 소리 맞춤 성공): `_src/v11g-idle{1,2,3}`(고치기 전 B 위치), `_src/v11h-idle3`(최종). 결과 31.6초/31.6초/25.1초(idle 2는 깜빡임 7, EASY PREY).
+- 성능 20:42 통과: 16.7/13.5 FPS, 메모리 63.73/200MB, 용량 2/8MB.
+- 확인함 카드와 미디어 준비, `gallery/PENDING.md` 등록(게시는 대화 세션).
+
+## (이전) 상태 (2026-10-03 16:01)
+- **깜빡하면 온다 = "Blink and It Moves" 제출 완료.**
 - 제출 내용: `tracker.json` → `submission`. 제출 자료 사본: `../blink-and-it-moves/submit-v1/`
 - 제작 과정 기록(씬 GUID, 기술 검증, 튜닝 근거): `../blink-and-it-moves/BUILD-NOTES.md`
 - 프로젝트: `C:\Users\Public\EHTest\Projects\blink-and-it-moves-v1\effect.ehproj` (제출본과 같은 상태로 저장)
@@ -24,7 +48,11 @@
   - v1이 승인되면 v1.1을 "기존 효과 업데이트"로 낸다(LOOP.md 5장 게이트 보강 예외).
   - v1이 반려되면 반려 사유를 v1.1에 함께 고쳐서 재제출한다.
 
-## 심사 기다리는 동안 할 일 (우선순위 순, 한 회차에 하나)
+## 매 회차 관측 (v1 공개 중)
+- Analytics 수치를 tracker observations에 기록한다. 판정 시점은 승인 후 D1(10/4 20시 이후), D3, D7, D14. 실험 판정은 승인 48시간 뒤부터.
+- 사용자에게 휴대폰 실기(소리 포함)를 부탁해 두었다(회차 4 알림). 결과를 받으면 마감 점수 근거로 쓴다.
+
+## (참고, v1 심사 중에 쓰던 목록) 심사 기다리는 동안 할 일
 1. **관측:** 매 회차 Effect House의 효과 관리 화면(제출 완료 창의 "Manage effects" 링크, 또는 Projects/Analytics 탭)에서 심사 상태를 확인한다. 화면 위치를 찾으면 `UI-NOTES.md`에 적는다.
 2. **반려 대비:** 반려되면 사유 원문을 기록하고 LOOP.md 3-3의 1번을 따른다. 재제출은 같은 효과 파일로 10번까지 가능하다.
 3. **개선 후보 정리(v1.1 실험 백로그, 승인 후 데이터 보고 하나씩):**

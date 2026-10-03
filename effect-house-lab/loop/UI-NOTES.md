@@ -63,5 +63,16 @@
 - 프로젝트를 처음 열면 안내 팝업 2개(Customize Workspace Layout, Keyboard shortcuts)와 Windows 방화벽 허용 창이 뜬다. 방화벽 창은 "취소"를 눌렀다(시스템 보안 설정은 사용자 몫).
 - 다른 이름으로 저장(Ctrl+Shift+S) 창은 기본 위치 `C:\Users\Public\EHTest\Desktop` 없음 오류를 먼저 띄운다. 확인 후 파일 이름 칸에 전체 경로를 붙여넣고(클립보드 + Ctrl+V, 한글 입력기 때문에 직접 타이핑 금지) 저장하면 그 이름의 폴더 안에 `effect.ehproj`가 생긴다.
 
+## 심사 상태와 수치 (2026-10-03 회차 4 확인)
+- 홈 창 위쪽 탭 **Projects → Manage Effects**: 효과 이름, Status(승인되면 `Active`), Last modified가 나온다. 줄 끝 아이콘은 공유, 업데이트(추정), 끄기, 삭제다. **삭제·끄기 아이콘은 누르지 않는다.**
+- **Analytics** 탭: 위쪽 Overview(Views, Tries, Posts, Likes, Shares, 계정 합계)와 Audience(Country/Gender, Creators/Viewers)가 있다. 아래 Manage effects 표에 효과별 Views, Posts, Tries, Likes, Shares가 있다. 표가 옆으로 길어서 가로 스크롤바 오른쪽 화살표를 눌러야 Likes·Shares가 보인다. "Data updates every 24 hours" 안내가 있다.
+- 프로젝트 창에서 왼쪽 위 집 아이콘(20,50)을 누르면 프로젝트가 닫히지 않고 홈 창으로 바뀐다. 홈 창은 오른쪽 모니터 가운데에 작게(약 1300x820) 뜬다.
+
 ## 함정
 - 한글 사용자 경로에서 실행하면 바로 꺼진다. 반드시 위 cmd로 실행한다.
+- **Effect House가 이미 켜져 있는데 또 실행하면** 두 번째 인스턴스가 "Start up failed! Another instance already running" 창을 띄운다. 그래도 창이 살아 있어 헷갈리고, `scr.ps1 focus/max`가 엉뚱한 인스턴스 창을 잡는다(회차 4에서 녹화 클릭이 홈 창으로 감). 실행 여부는 `(Get-Process "Effect House" -ErrorAction SilentlyContinue).Count`처럼 **따로** 확인한다. 다른 명령 출력과 한 줄에 섞으면 PowerShell 표 형식 때문에 결과가 안 보일 수 있다(회차 4에서 실제로 놓침).
+- 창 하나만 있는지 확인: 회차 4 기준 정상 상태는 프로세스 1개다. 두 개면 나중에 뜬 쪽(StartTime 최신)을 CloseMainWindow로 닫는다(저장 창이 뜨면 Save).
+- 프로젝트 창이 작업 표시줄을 남기고 최대화되면(높이 1032) 녹화 버튼이 (1285,569)로 올라간다. 전체 화면(1080)일 때는 (1284,594)다. 녹화 전에 캡처해서 확인한다.
+- MCP `open_project`는 이미 열린 인스턴스에서 프로젝트를 바꿔 연다. 새 인스턴스를 띄울 필요가 없다.
+- `generate_image` 결과 텍스처는 최대 512px로 압축된다(Size512). 화면에 0.1초만 나오는 컷에는 문제없었다.
+- 프로젝트 `Assets`의 PNG를 같은 이름으로 덮어쓰면 Effect House가 자동으로 다시 읽는다(회차 4, 눈빛 추가 때 확인).
