@@ -30,7 +30,6 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   @serializeProperty frameLabels: APJS.SceneObject[] = [];
   @serializeProperty timeText: APJS.SceneObject;
   @serializeProperty rankText: APJS.SceneObject;
-  @serializeProperty caughtCard: APJS.SceneObject;
   @serializeProperty retryButton: APJS.SceneObject;
   @serializeProperty droneSfx: APJS.SceneObject;
   @serializeProperty thumpSfx: APJS.SceneObject;
@@ -60,15 +59,7 @@ export class BlinkGame extends APJS.BasicScriptComponent {
   private heartT = -1;
   private scareShot = 0;
   private bestReact = -1;
-  // reaction shots are taken once the camera is uncovered, so the face shows with the figure right behind it
-  private readonly reactTimes = [0.05, 0.22, 0.4];
-  private readonly popAt = 0.55;
-  private readonly reactRect = new APJS.Rect(0.33, 0.3, 0.6, 0.6);
-  private resultT = 0;
-  private popped = false;
-  private f3Tr: APJS.ScreenTransform | undefined;
-  private cardTr: APJS.ScreenTransform | undefined;
-  private f3Home = new APJS.Vector2f(243, -170);
+  private readonly reactTimes = [0.48, 0.62, 0.76];
   private readonly scareDark = 0.06;
   private shownBeat = -1;
 
@@ -108,9 +99,6 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     this.rank = this.rankText ? (this.rankText.getComponent('Text') as APJS.Text) : undefined;
     this.frameTexts = this.frameLabels.map(o => o.getComponent('Text') as APJS.Text);
     this.retryImg = this.retryButton.getComponent('Image') as APJS.Image;
-    this.f3Tr = this.frames[3].getComponent('ScreenTransform') as APJS.ScreenTransform;
-    if (this.f3Tr) this.f3Home = this.f3Tr.anchoredPosition;
-    this.cardTr = this.caughtCard ? (this.caughtCard.getComponent('ScreenTransform') as APJS.ScreenTransform) : undefined;
     if (!this.figTr || !this.scareTr || !this.cam || !this.time || !this.retryImg || this.frameImgs.some(x => !x)) return false;
     // sounds are optional: a missing player just stays silent
     const sfx = (o: APJS.SceneObject): APJS.AudioComponent[] => {
@@ -183,8 +171,8 @@ export class BlinkGame extends APJS.BasicScriptComponent {
     return closed || face.hasAction(APJS.FaceAction.EyeBlink) || face.hasAction(APJS.FaceAction.EyeBlinkLeft) || face.hasAction(APJS.FaceAction.EyeBlinkRight);
   }
 
-  private capture(rect: APJS.Rect = new APJS.Rect(0, 0, 1, 1), scale = 0.3): APJS.Texture | undefined {
-    const tex = APJS.CaptureFrameHelper.captureCameraOutput(this.cam, rect, scale);
+  private capture(): APJS.Texture | undefined {
+    const tex = APJS.CaptureFrameHelper.captureCameraOutput(this.cam, new APJS.Rect(0, 0, 1, 1), 0.3);
     return tex ? tex : undefined;
   }
 
@@ -226,61 +214,12 @@ export class BlinkGame extends APJS.BasicScriptComponent {
         if (this.frameTexts[i]) this.frameTexts[i].text = this.shotTimes[k].toFixed(1) + 's';
       }
     }
-    // the CAUGHT photo is filled in by the reaction shots and pops out of the strip a moment later
-    this.resultT = 0; this.popped = false; this.scareShot = 0; this.bestReact = -1;
-    if (n > 0) this.frameImgs[3].texture = this.shots[n - 1];
-    if (this.frameTexts[3]) this.frameTexts[3].text = '';
-    if (this.caughtCard) this.caughtCard.setEnabledInHierarchy(false);
-    this.poseCaught(0);
+    if (this.reaction.length > 0) this.frameImgs[3].texture = this.reaction[0];
+    if (this.frameTexts[3]) this.frameTexts[3].text = 'CAUGHT';
     this.time.text = 'LASTED ' + this.playTime.toFixed(1) + 's';
     // a title worth posting: the fewer blinks it took to catch you, the worse the title
     if (this.rank) this.rank.text = this.rankTitle();
     console.log('[game] result time=' + this.playTime.toFixed(2) + ' blinks=' + this.blinks + ' shots=' + n + ' reaction=' + this.reaction.length);
-  }
-
-  private updateCaught(dt: number): void {
-    this.resultT += dt;
-    // keep the most surprised/fearful of three reaction shots
-    if (this.scareShot < this.reactTimes.length && this.resultT >= this.reactTimes[this.scareShot]) {
-      this.scareShot++;
-      const res = APJS.AlgorithmManager.getResult();
-      let score = 0;
-      if (res.getFaceAttributeCount() > 0) { const pr = res.getFaceAttributeInfo(0).expressionProbabilities; score = pr[5] + pr[2]; }
-      if (score > this.bestReact) {
-        // 9:16 crop (rect origin is bottom-left) around the face and the figure's head over the right shoulder, sharper than the strip shots
-        const tex = this.capture(this.reactRect, 0.6);
-        if (tex) { this.reaction = [tex]; this.bestReact = score; this.frameImgs[3].texture = tex; }
-      }
-      console.log('[game] reaction shot ' + this.scareShot + ' score=' + score.toFixed(3));
-    }
-    const p = this.resultT - this.popAt;
-    if (p < 0) return;
-    if (!this.popped) {
-      this.popped = true;
-      if (this.caughtCard) this.caughtCard.setEnabledInHierarchy(true);
-      if (this.frameTexts[3]) this.frameTexts[3].text = 'CAUGHT';
-      this.thump.forEach(a => a.play());
-    }
-    // overshoot then settle, like a photo slapped onto the table
-    const k = Math.min(1, p / 0.22) - 1;
-    this.poseCaught(1 + 2.2 * k * k * k + 1.2 * k * k);
-  }
-
-  // e = 0: sits in the strip; e = 1: enlarged, tilted instant photo over the strip's right end
-  private poseCaught(e: number): void {
-    if (!this.f3Tr) return;
-    const s = 1 + 0.45 * e, rot = -6 * e;
-    const pos = new APJS.Vector2f(this.f3Home.x - 38 * e, this.f3Home.y + 8 * e);
-    this.f3Tr.scale = new APJS.Vector2f(s, s);
-    this.f3Tr.rotation = rot;
-    this.f3Tr.anchoredPosition = pos;
-    if (this.cardTr) {
-      // the card hangs 17 px lower than the photo (wider bottom margin for the label), rotated with it
-      const a = rot * Math.PI / 180, d = 17 * s;
-      this.cardTr.scale = new APJS.Vector2f(s, s);
-      this.cardTr.rotation = rot;
-      this.cardTr.anchoredPosition = new APJS.Vector2f(pos.x + d * Math.sin(a), pos.y - d * Math.cos(a));
-    }
   }
 
   private rankTitle(): string {
@@ -343,11 +282,19 @@ export class BlinkGame extends APJS.BasicScriptComponent {
       const w = beat < n ? 1 - beat / n : 0;
       const ox = 150 * w, oy = beat < n ? 90 - 210 * beat / Math.max(1, n - 1) : 0;
       this.scareTr.anchoredPosition = new APJS.Vector2f(this.scareHome.x + ox + amp * Math.sin(r * 90), this.scareHome.y + oy + amp * Math.cos(r * 77));
+      // keep the most surprised/fearful of three reaction shots
+      if (this.scareShot < this.reactTimes.length && this.t >= this.reactTimes[this.scareShot]) {
+        this.scareShot++;
+        const res = APJS.AlgorithmManager.getResult();
+        let score = 0;
+        if (res.getFaceAttributeCount() > 0) { const pr = res.getFaceAttributeInfo(0).expressionProbabilities; score = pr[5] + pr[2]; }
+        if (score > this.bestReact) { const tex = this.capture(); if (tex) { this.reaction = [tex]; this.bestReact = score; } }
+        console.log('[game] reaction shot ' + this.scareShot + ' score=' + score.toFixed(3));
+      }
       // the camera stays covered for scareDark + strike + 0.42 s (0.8 s with two lunge frames, ~0.9 s measured; under the 1 s limit)
       if (r >= strike + 0.42) this.showResult();
       return;
     }
-    if (this.state === 'result') { this.updateCaught(dt); return; }
     if (this.state !== 'play') return;
     this.playTime += dt;
     const result = APJS.AlgorithmManager.getResult();
