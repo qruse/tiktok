@@ -85,7 +85,7 @@
 
 ### 3-5. 마무리 (10분)
 1. `LOOP-LOG.md`에 회차 기록을 추가한다. 형식은 9장을 따른다.
-2. `tracker.json`, `WORKING.md`, 필요하면 `UI-NOTES.md`와 `LEARNINGS.md`를 갱신한다. 화면이나 소리가 바뀐 회차면 Effect 확인함(7-1)에 새 카드를 올린다.
+2. `tracker.json`, `WORKING.md`, 필요하면 `UI-NOTES.md`와 `LEARNINGS.md`를 갱신한다. 화면이나 소리가 바뀐 회차면 Effect 확인함(7-1) 카드를 준비하고 `PENDING.md`에 등록한다.
 3. `git add -A`, `git commit -m "loop: <한 줄 요약>"`, `git push`를 한다. push가 실패하면 기록만 남긴다.
 4. 7장 방법으로 한국어 2~3줄 알림을 보낸다.
 
@@ -146,7 +146,7 @@
 - [ ] Effect House 성능, 용량 경고가 없다.
 - [ ] 이름, 설명, 해시태그는 영어로 쓴다. 이름은 짧고 규칙이 보여야 한다.
 - [ ] 효과 안의 소리가 실제로 나는지 `record-run.ps1 -Audio` 녹음으로 확인한다. 소리 나는 시점이 화면 이벤트와 맞아야 한다.
-- [ ] 이 버전의 소리 있는 영상과 GIF가 Effect 확인함(7-1)에 올라가 있다.
+- [ ] 이 버전의 소리 있는 영상과 GIF가 Effect 확인함(7-1) 카드로 준비되어 있다(`PENDING.md`에 등록 또는 게시 완료).
 - [ ] 데모 영상은 소리 있는 판(`-sound.mp4`)에서 15초를 자른다.
 
 ### 업데이트 회귀 검사 (공개 효과 수정 시)
@@ -175,12 +175,16 @@
   - 한 판 전체를 담은 소리 있는 영상(`record-run.ps1 -Audio`의 `-sound.mp4`)
   - 핵심 장면 샘플 GIF(15초 이내)
   - 게이트 점수, 바뀐 점 2~4줄
-- **올리는 방법:**
+- **무인 회차(`claude -p`)에는 Artifact 도구가 없다(2026-10-03 시험으로 확인).** 그래서 회차는 페이지에 올리지 않고 아래 1~3까지 준비만 한다. 실제 게시(4)는 사용자와의 대화 세션이 한다.
+- **준비 방법(회차):**
   1. 미디어를 `loop/gallery/media/<effect>-<버전>-full.mp4`, `<effect>-<버전>.gif`로 복사한다.
   2. `index.html`의 `<!-- NEW ENTRIES GO HERE -->` 아래에 기존 `<article>`을 본떠 새 카드를 넣는다(최신이 위). 이전 카드의 상태 표시(제출됨, 승인 등)도 최신으로 고친다.
-  3. Artifact `action: "read"`로 위 주소를 한 번 읽는다(다른 대화에서 올린 페이지는 읽어야 고칠 수 있다).
-  4. `url`을 위 주소로, `file_path`를 `index.html`로, `files`에는 새 미디어만 넣어 publish한다(기존 미디어는 그대로 남는다).
-- 실패하면 LOOP-LOG "막힘"에 적고 다음 회차에 다시 한다. 제출은 이 페이지에 그 버전이 올라간 뒤에 한다.
+  3. `loop/gallery/PENDING.md`에 아직 게시하지 않은 미디어 파일 이름을 한 줄씩 추가한다. 이 파일이 있으면 "게시 대기"라는 뜻이다.
+- **게시 방법(대화 세션):** `PENDING.md`가 있으면 사용자 요청을 처리하기 전에 먼저 게시한다.
+  1. Artifact `action: "read"`로 위 주소를 읽는다.
+  2. `url`을 위 주소로, `file_path`를 `index.html`로 주고, `files`에는 PENDING에 적힌 미디어만 넣어 publish한다. 기존 미디어는 그대로 남는다.
+  3. `PENDING.md`를 지우고 커밋한다.
+- 제출은 이 버전의 카드와 미디어가 준비된 뒤에 한다(게시는 대화 세션에서 나중에 해도 된다).
 
 ## 7. 알림
 - **보내는 방법:** `loop/tools/notify.ps1 -Message "..." [-Priority low|default|high]`를 쓴다. PushNotification은 쓰지 않는다. 무인 회차(`claude -p`)에는 원격 제어가 없어서 휴대폰에 닿지 않는다(2026-10-03 확인).
