@@ -58,6 +58,17 @@
 - 챌린지를 고르면 약관 동의 체크박스(권리 확인, 이메일 공유)가 나온다. 사용자 동의를 받고 체크한다(2026-10-03 동의 받음).
 - 제출하면 "Your effect has been submitted! … usually takes 24 hours" 창이 뜨고, 그 아래 "Manage effects" 링크가 있다.
 
+### 기존 효과 업데이트 제출 (2026-10-04 회차 9 확인, 창 최대화 기준)
+- Submit(1828,50) → "What do you want to submit?" 드롭다운(800,285) → 세 번째 "An update to an active or deactivated effect"(737,375) → "Select an existing effect"(800,361) → Blink and It Moves(680,403). 이름은 자동으로 채워진다.
+- **업데이트를 고르면 아이콘·챌린지·데모가 모두 비워진다.** 다시 넣어야 한다.
+  - 아이콘: Icon 1 칸(612,534)을 누르면 Create Icon 창이 뜨고 미리보기가 실시간으로 돈다(실제 속도, idleStep 4.5). "Create multiple icons"(1382,662)를 끄고, 다시 재생(1262,617) 후 약 19초에 일시정지(1213,617)하면 형체가 오른쪽 어깨 뒤에 크게, 머리까지 보인다. 23초 무렵은 머리가 위로 잘리고, 30초 넘으면 결과 화면이 된다. Submit(1339,823).
+  - 폼 스크롤: scr.ps1에 휠이 없다. `mouse_event(0x0800, ..., -120)`를 (800,600)에서 10번 보내면 Optional Info가 보인다.
+  - 챌린지(800,549) → 맨 아래 "Game Effect Challenge-Halloween Warmup Sub Challenge"(777,717) → 권리 확인 체크박스(588,705).
+  - **Trend는 업데이트에서 회색 None이고 열리지 않는다.**
+  - 데모 Add(612,703) → 파일 창에 영문 경로를 붙여넣고 열기(1350,653). 한글 경로는 피했다(`_src/submit/`에 복사).
+- 제출 뒤 Manage Effects에는 같은 이름 줄이 두 개가 된다. 위 줄 "Under review"(▾로 펼침), 아래 줄 "Active"(공개 중인 v1). 심사 중인 줄 끝의 ⊖ 아이콘은 누르지 않는다(제출 철회로 보임).
+- 제출 직후 홈으로 가면 "Help us improve" 설문 창이 뜰 수 있다. Not now(1048,590).
+
 ## 창 다루기
 - 창이 두 모니터에 걸쳐 있으면 오른쪽 모니터(원점 0,0, 1920x1080)로 옮겨 최대화해서 쓴다. `scr.ps1 -Action max -Text "Effect House"` (단, 팝업이 떠 있으면 팝업이 최대화되니 팝업을 먼저 닫는다).
 - 프로젝트를 처음 열면 안내 팝업 2개(Customize Workspace Layout, Keyboard shortcuts)와 Windows 방화벽 허용 창이 뜬다. 방화벽 창은 "취소"를 눌렀다(시스템 보안 설정은 사용자 몫).

@@ -178,3 +178,18 @@
    - 홈 창 오가기, Recent Projects 더블클릭, inspect r20은 UI-NOTES 좌표대로 한 번에 됐다. 지난 회고 때 넣은 "큰 단계마다 커밋"도 회차 4~8에서 모두 wip 커밋이 남아 효과가 있었다.
 4. 데이터: v1은 10/3 20:22 Active 확인 뒤 약 15시간 동안 Views·Tries·Posts·Likes·Shares가 모두 0이다. 화면에 "Data updates every 24 hours"라고 나오므로 아직 판단하지 않는다. D1 판정(10/4 20시 이후)에서도 Views가 0이면 노출 문제(아이콘·이름·챌린지 태그)를 병목 후보 1순위로 본다. 진행 중인 실험은 없다(v1.1은 게이트 보강이라 실험으로 치지 않는다).
 - 규칙 변경: 없음.
+
+## 2026-10-04 11:17 · 회차 9
+- 관측: v1(Blink and It Moves)은 계속 공개 중(Active)이다. Analytics의 Views, Tries, Posts, Likes, Shares는 모두 0으로 지난 회차와 같다. Audience는 "Not enough data"다. 사용 영상은 없다. PC 입력은 2.8시간 넘게 없었고, Effect House는 1개만 실행 중이었다.
+- 판단: 09시가 지났고 오늘 회고를 하지 않아 0번(회고)을 먼저 했다(위 "2026-10-04 · 회고"). 이어서 2번(제작 중 작업 이어가기)을 골랐다. WORKING.md에 따라 결과 화면을 블라인드로 재채점했다. 3-1 예외대로 WORKING.md를 먼저 읽고, LOOP-LOG 채점 줄과 tracker gate_scores는 채점 뒤에 읽었다.
+- 한 일:
+  - **결과 화면 블라인드 재채점: 5(확인).** 비교 이미지(`shots/gate7-result-compare.jpg`)와 영상 3종 마지막 프레임(`t8-ends.jpg`)만 보고 채점했다. 세 판 모두 인화 사진 카드에 내 얼굴과 형체 얼굴이 함께 또렷하다. 칭호와 시간이 함께 있어 "잡힌 순간"이 게시 이유로 바로 읽힌다. 비교한 상위 효과(국기 게임, 카우보이, 0$)의 결과 화면보다 올릴 이유가 또렷하다. 회차 8의 잠정 5?와 일치한다.
+  - **최종 게이트(v1.1e): 첫 화면 4 / 아트 4 / 덮침 5 / 결과 5 / 마감 4 → 통과**(모두 4 이상, 5가 2개).
+  - 제출 직전 inspect r20 확인(steps 7, minGap 0.4, idleStep 4.5, closeRatio 0.6, caughtCard s38).
+  - **11:25 v1.1을 기존 효과 업데이트로 제출했다**(An update to an active or deactivated effect → Blink and It Moves). 업데이트를 고르면 아이콘·챌린지·데모가 비워져서 다시 넣었다.
+    - 아이콘: Create Icon에서 기존과 같은 템플릿 인물로 v1.1을 다시 렌더했다. 약 19초에 멈춰 형체가 오른쪽 어깨 뒤에 크게, 머리까지 보이게 했다(`blink-and-it-moves/submit-v1.1/t9-icon-paused.png`). 1개.
+    - 챌린지: Halloween Warmup Sub Challenge(10/3 사용자 동의 근거로 권리 확인 체크). Trend는 업데이트 화면에서 선택할 수 없었다(None).
+    - 데모: `submit-v1.1/demo15-A.mp4`(소리 있는 녹화 마지막 15초, 753.9KB).
+    - 제출 완료 창과 Manage Effects를 확인했다. 위 줄은 "Under review", 아래 줄 v1은 "Active"다(`shots/t9-submitted.png`, `t9-manage3.png`).
+  - 즉시 알림(notify.log). tracker에 제출 내용, 게이트 점수, 실험 `v1.1-gate`, 관측을 기록했다. 확인함 카드 `blink-v1.1e` 상태를 "업데이트 제출됨"으로 바꿨다. UI-NOTES에 업데이트 제출 절차를 적었다.
+- 다음: 업데이트 심사 상태와 Analytics를 관측한다. 심사 중이면 짧게 끝낸다. 20시 이후 첫 회차에서 v1 D1을 본다.
