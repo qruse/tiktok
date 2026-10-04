@@ -342,6 +342,21 @@
           },
           "video_notes": "사용 영상 없음(Posts 0). Audience는 'Not enough data to show this report'",
           "source": "EH 홈 > Analytics Overview(계정 합계, 효과 1개뿐), Projects > Manage Effects Status(Last modified 10/3/26 04:01 PM). 캡처 shots/t9-analytics.png, t9-manage.png"
+        },
+        {
+          "at": "2026-10-04T14:20:00+09:00",
+          "review_status": "approved",
+          "metrics": {
+            "Status": "Active",
+            "Update v1.1 status": "Under review",
+            "Views": 0,
+            "Tries": 0,
+            "Posts": 0,
+            "Likes": 0,
+            "Shares": 0
+          },
+          "video_notes": "사용 영상 없음(Posts 0). Audience는 'Not enough data to show this report'",
+          "source": "EH 홈 > Analytics Overview(계정 합계, 효과 1개뿐), Projects > Manage Effects(위 줄 Under review, 아래 줄 Active, 둘 다 Last modified 10/4/26 11:25 AM). 캡처 shots/t10-analytics-c.jpg, t10-manage2-c.jpg"
         }
       ],
       "cash_spent_krw": 0

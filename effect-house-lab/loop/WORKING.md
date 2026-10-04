@@ -1,6 +1,10 @@
 # 진행 중 작업
 
-## ★ 최신 상태 (2026-10-04 11:30, 회차 9)
+## ★ 최신 상태 (2026-10-04 14:25, 회차 10)
+- 회차 10 관측: 업데이트는 계속 Under review, v1 Active, 수치 모두 0. 바뀐 것이 없어 관측만 하고 끝냈다(알림 없음).
+- 회차 10이 홈으로 갈 때 v1.1 프로젝트에 저장 안 한 상태가 있어 Save를 눌렀다(회차 9 제출 때 아이콘 재렌더분으로 보임). 지금 Effect House는 홈 창(Analytics 탭)에 있다. 프로젝트로 돌아가려면 Projects → Recent Projects → 첫 줄 더블클릭.
+
+## (회차 9) 상태 (2026-10-04 11:30)
 - **v1.1(v1.1e) 업데이트 제출 완료(10/4 11:25).** Manage Effects 위 줄 "Under review", 아래 줄 v1 "Active". 결과 화면 블라인드 재채점 5 확인 → 최종 4/4/5/5/4로 통과. 제출 내용은 tracker `update_in_progress.submitted_with`, 캡처는 `../blink-and-it-moves/submit-v1.1/t9-*.png`.
   - 아이콘은 Create Icon에서 v1.1로 다시 렌더했다(같은 템플릿 인물, 약 19초 멈춤, 형체가 어깨 뒤 크게). Trend는 업데이트 화면에서 선택 불가(None).
 - **심사 중에는 v1.1 프로젝트(`blink-and-it-moves-v1.1`)를 고치지 않는다**(LOOP.md 3-3 2번). 반려되면 이 상태에서 고쳐 재제출한다. 다른 개선이 필요하면 `blink-and-it-moves-v1.2` 복사본에서 한다.

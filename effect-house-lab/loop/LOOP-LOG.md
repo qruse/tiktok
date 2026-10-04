@@ -193,3 +193,9 @@
     - 제출 완료 창과 Manage Effects를 확인했다. 위 줄은 "Under review", 아래 줄 v1은 "Active"다(`shots/t9-submitted.png`, `t9-manage3.png`).
   - 즉시 알림(notify.log). tracker에 제출 내용, 게이트 점수, 실험 `v1.1-gate`, 관측을 기록했다. 확인함 카드 `blink-v1.1e` 상태를 "업데이트 제출됨"으로 바꿨다. UI-NOTES에 업데이트 제출 절차를 적었다.
 - 다음: 업데이트 심사 상태와 Analytics를 관측한다. 심사 중이면 짧게 끝낸다. 20시 이후 첫 회차에서 v1 D1을 본다.
+
+## 2026-10-04 14:17 · 회차 10
+- 관측: v1.1 업데이트는 계속 심사 중(Under review)이고, v1(Blink and It Moves)은 계속 공개 중(Active)이다. Analytics의 Views, Tries, Posts, Likes, Shares는 모두 0으로 지난 회차와 같다. Audience는 "Not enough data"다. 사용 영상은 없다. PC 입력은 2.8시간 넘게 없었고, Effect House는 1개만 실행 중이었다.
+- 판단: 오늘 회고는 회차 9에서 했다. 반려된 효과와 제작 중인 작업이 없다. 실험 판정 시점(승인 48시간 뒤)이 아직 아니고, 심사 중인 업데이트가 있어 새 개선도 만들지 않는다. 그래서 6번(관측만 하고 짧게 끝냄)을 골랐다. 상태가 바뀌지 않아 알림은 보내지 않는다.
+- 한 일: 심사 상태와 수치를 tracker에 기록했다(`shots/t10-manage2-c.jpg`, `t10-analytics-c.jpg`). 홈으로 갈 때 v1.1 프로젝트에 "Save this project?" 창이 떠서 Save를 눌렀다. 회차 9가 제출 때 아이콘을 다시 만든 뒤 저장하지 않은 상태로 보인다. 저장해서 디스크 상태를 제출본과 맞췄다. 설정값은 바꾸지 않았다.
+- 다음: 업데이트 심사 상태와 Analytics를 관측한다. 20시 이후 첫 회차(회차 12 예정, 10/4 20:17)에서 v1 D1을 본다.
